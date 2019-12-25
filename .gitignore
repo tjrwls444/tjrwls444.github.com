@@ -1,31 +1,28 @@
-# OS X
-.DS_Store
+# User specific & automatically generated files #
+#################################################
+**/target
+**/.settings
+**/.project
+**/.classpath
+**/.vlt
+**/node_modules
+**/.vlt-sync.log
+**/.DS_Store
+**/.idea
+**/gulp-customization.json
+**/*.iml
+**/*.sublime-project
+**/*.sublime-workspace
+ui.apps/src/main/content/jcr_root/.vlt-sync.log
+ui.apps/src/main/content/jcr_root/content
+ui.apps/src/main/content/jcr_root/libs
+/bin/
+start.bat
 
-# Jekyll build
-/_site/
-.jekyll-metadata
-#Gemfile.lock
-
-# webstorm
-.idea/
-
-# others
-*.swp
-
-# site build
+.history/
 *.gem
-*.rbc
 .bundle
-.config
-coverage
-InstalledFiles
-lib/bundler/man
-pkg
-rdoc
-spec/reports
-test/tmp
-test/version_tmp
-tmp
-vendor
+.sass-cache
+_site
 Gemfile.lock
-node_modules
+.vscode
