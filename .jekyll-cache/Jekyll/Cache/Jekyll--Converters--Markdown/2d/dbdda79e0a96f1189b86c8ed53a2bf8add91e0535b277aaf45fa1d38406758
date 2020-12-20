@@ -1,0 +1,142 @@
+I"P<h3>  Categories </h3>
+
+<div id="categories">
+
+  <div class="category-box">
+    
+    <div id="#gitBlog"></div>
+    <h4 class="tag-head">
+        <li class="category-posts">
+            <a href="/blog/categories/gitBlog">
+                
+                
+                gitBlog
+            ( 5 )</a>
+        </li>
+    </h4>
+    <a name="gitBlog"></a>
+  </div>
+
+  <div class="category-box">
+    
+    <div id="#algorithm"></div>
+    <h4 class="tag-head">
+        <li class="category-posts">
+            <a href="/blog/categories/algorithm">
+                
+                
+                algorithm
+            ( 26 )</a>
+        </li>
+    </h4>
+    <a name="algorithm"></a>
+  </div>
+
+  <div class="category-box">
+    
+    <div id="#JAVA"></div>
+    <h4 class="tag-head">
+        <li class="category-posts">
+            <a href="/blog/categories/JAVA">
+                
+                
+                JAVA
+            ( 32 )</a>
+        </li>
+    </h4>
+    <a name="JAVA"></a>
+  </div>
+
+  <div class="category-box">
+    
+    <div id="#javascript"></div>
+    <h4 class="tag-head">
+        <li class="category-posts">
+            <a href="/blog/categories/javascript">
+                
+                
+                javascript
+            ( 1 )</a>
+        </li>
+    </h4>
+    <a name="javascript"></a>
+  </div>
+
+  <div class="category-box">
+    
+    <div id="#cygwin"></div>
+    <h4 class="tag-head">
+        <li class="category-posts">
+            <a href="/blog/categories/cygwin">
+                
+                
+                cygwin
+            ( 1 )</a>
+        </li>
+    </h4>
+    <a name="cygwin"></a>
+  </div>
+
+  <div class="category-box">
+    
+    <div id="#Perl"></div>
+    <h4 class="tag-head">
+        <li class="category-posts">
+            <a href="/blog/categories/Perl">
+                
+                
+                Perl
+            ( 3 )</a>
+        </li>
+    </h4>
+    <a name="Perl"></a>
+  </div>
+
+  <div class="category-box">
+    
+    <div id="#travel"></div>
+    <h4 class="tag-head">
+        <li class="category-posts">
+            <a href="/blog/categories/travel">
+                
+                
+                travel
+            ( 1 )</a>
+        </li>
+    </h4>
+    <a name="travel"></a>
+  </div>
+
+  <div class="category-box">
+    
+    <div id="#maven"></div>
+    <h4 class="tag-head">
+        <li class="category-posts">
+            <a href="/blog/categories/maven">
+                
+                
+                maven
+            ( 2 )</a>
+        </li>
+    </h4>
+    <a name="maven"></a>
+  </div>
+
+  <div class="category-box">
+    
+    <div id="#dataStructure"></div>
+    <h4 class="tag-head">
+        <li class="category-posts">
+            <a href="/blog/categories/dataStructure">
+                
+                
+                dataStructure
+            ( 6 )</a>
+        </li>
+    </h4>
+    <a name="dataStructure"></a>
+  </div>
+
+</div>
+
+:ET

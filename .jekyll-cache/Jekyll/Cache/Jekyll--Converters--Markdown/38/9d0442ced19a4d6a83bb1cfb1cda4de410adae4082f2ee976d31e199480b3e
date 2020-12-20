@@ -1,0 +1,684 @@
+I"�\<h5 id="풀어보기---백준-알고리즘자료구조편">풀어보기 : <a href="https://www.acmicpc.net/problem/tag/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0" target="_blank"> 백준 알고리즘(자료구조편)</a></h5>
+
+<p><br /></p>
+<h6 id="해당-문제-풀이---중앙값-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/1572" target="_blank"> 중앙값 </a></h6>
+
+<p class="text-danger bold-text"> 구간합을 구할 수 있는 트리구조의 대해 공부의 필요성을 느껴 따로 트리구조에 대해 정리</p>
+<ul>
+  <li>내 풀이 : 인덱스 트리를 사용( 맞는 값으로 보이는데 정답 자체는 틀리다고 나옴 무엇이 틀렸는지 모르겠음 ㅠ )</li>
+  <li>Input이 들어왔을 때, 구간의 중앙값만 따로 저장해 놓고 그 중앙값을 인덱스 트리로 만들어 놓고 구간합을 구하는 전략을 사용하였다.</li>
+</ul>
+<pre>
+
+
+public class Main {
+    public static void main(String[] args) throws NumberFormatException, IOException {
+       
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] fistInput = br.readLine().split(" ");
+        int n = Integer.parseInt(fistInput[0]);
+        int k = Integer.parseInt(fistInput[1]);
+        int [] input = new int[n-k+1];
+        int [] mid = new int[k];
+        for (int index = 0; index &lt; n; index++) {
+            int number = Integer.parseInt(br.readLine());
+            if( index &gt; k-1) {
+                int temp = index%k;
+                mid[temp] = number;
+                input[index-k+1] = getMid(mid);
+            } else if(index == k-1){
+                mid[index] = number;
+                input[index-k+1] = getMid(mid);
+            } else {
+                mid[index] = number;
+            }
+        }
+        IndexTree tree = new IndexTree(input);
+    }
+    public static int getMid( int [] mid) {
+        int[] temp = new int[mid.length];
+        System.arraycopy(mid, 0, temp, 0, mid.length);
+        Arrays.sort(temp);
+        int position = (temp.length-1)/2;
+        return temp[position];
+    }
+}
+class IndexTree {
+    private int data[];
+    private int originalStart;
+    
+    public IndexTree( int[] orignal ) {
+        int originalSize = orignal.length;
+        originalStart = 1;
+        
+        while (originalStart &lt; originalSize)
+            originalStart &lt;&lt;= 1;
+        
+        data = new int[originalStart*2];
+        
+        for( int index = 0; index &lt; orignal.length; index++ ) {
+            updateTree( index, orignal[index] );
+        }
+    }
+    
+    public void updateTree( int index, int value) {
+        index += originalStart;
+        int beforeValue = data[index];
+        while(index &gt; 0) {
+            data[index] = data[index] - beforeValue + value;
+            index&gt;&gt;=1;
+        }
+    }
+
+   public int intervalSum( int start, int end ) {
+       start += originalStart;
+       end += originalStart;
+       int sum = 0;
+       while ( start &lt; end ) {
+           if( start%2 == 1) {
+               sum += data[start]; 
+               start++;
+           }
+           if( end%2 == 0) {
+               sum += data[end];
+               end--;
+           }
+           start&gt;&gt;=1;
+           end&gt;&gt;=1;
+       }
+       if( start == end ) {
+           sum += data[start];
+       }
+       
+       return sum;
+   }
+   
+    public void print() {
+        for (int index = 0; index &lt; data.length; index++) {
+            System.out.print(data[index] + " ");
+        }
+        System.out.println();
+    }
+}
+
+</pre>
+<ul>
+  <li>남들이 한 정답</li>
+  <li>예전부터 자주보이는 형식인데  정렬을 하는대신 Tree의 인덱스 자체를 정렬에 응용함</li>
+  <li>인덱스 : Input 숫자, value : 갯수</li>
+</ul>
+
+<pre>
+ex) k = 5개 &gt;&gt; (5+1)/3 3의 위치의 숫자를 구하면 중강값임
+                      5
+              0                 5
+        0          0     0             5
+                      .
+                      .
+                      .
+                                 3              2
+                      .
+                      .
+                      .    
+                             2         1
+                                   1         0 (마지막 노드)
+ex) 
+                 5
+         2                  3
+     1        1         1          2
+   1   0   0    1    0     1    1      1
+  (1   2   3    4    5     6    7      8) 
+int[] tree = { 0, 5, 2, 3, 1, 1, 2, 1, 0, 0, 1, 0, 1, 1, 1};
+5의 중간인 3의 위치에 있는 1을 구하고 
+그 1의 마지막 노드의 index값이 mid가 되는것을 응용 3의 위치의 1은 index = 6 이기 때문에 중간값은 6을 응용
+ 
+
+</pre>
+<p class="text-danger bold-text">코드</p>
+<pre>
+
+public class Main {
+    static int N, K, Mid, Len;
+    static long SUM;    
+    static int Tree[], Data[];
+    static void update(int i, int n)
+    {
+        int idx = Len + n; // low데이터 시작위치 확인 : index자체를 값으로 응용하기 위해 들어온 수 만큼 + n 시킨 위치의 값을 1로 변경
+        
+        while(idx &gt; 0)
+        {
+            Tree[idx] += i; // 해당 설계를 가지고 인덱스 트리 만들기
+            idx /= 2;
+        }
+    }
+    static int search(int k)
+    {
+        int i = 1;
+        int l = 0;
+        while(i &lt; (1&lt;&lt;16))
+        {
+            //tree 루트인 index 1부터 검색 (맨 처음에는 K갯수 만큼 저장되어있을 것임 &gt;&gt; 이것을 mid인 (K+1)/2 위치의 숫자를 찾아가는 과정)
+            l = Tree[i*2]; 
+            // 자식노드 확인 자식노드에 저장된 갯수 확인
+            
+            // 자식노드에 저장된 수가  ( ex) 5 ) 중간값 (ex ) 2 )보다 크거나 같다면 계속 자식 탐색
+            if(k &lt;= l)
+            {
+                i = i * 2; // 자식 노드의 왼쪽 값
+            }
+            else
+            {
+                // 작아버리면  ex) k = 2 , ㅣ = 1
+                // 마지막값을 찾기위해  k를 줄이고
+                k = k - l;
+                // 자식의 오른쪽 노드를 탐색한다.
+                i = i * 2 + 1; //자식 노드의 오른쪽 값
+            }
+        }
+
+        // 최종 index의 위치인 i에서 시작점을 빼면 중간 값을 추출할 수 있음
+        return i - Len;
+    }
+    public static void main(String[] args) throws NumberFormatException, IOException {
+        Scanner sc = new Scanner(System.in);
+        
+        N = sc.nextInt();
+        K = sc.nextInt();
+        Mid = (K+1)/2;
+        Len = 1&lt;&lt;16; // 트리의 로우데이터 시작위치는 N의 최대크기인 2의16승 = 65536
+        Tree = new int[2*Len+1];
+        Data = new int[N+1];
+        for(int i = 1 ; i &lt;= N ; i++)
+        {
+            Data[i] = sc.nextInt();
+            if(i &lt; K)
+            {
+                update(1, Data[i]);
+                // k가 넘어가기 전까진 데이터를 트리에 넣기만 함.
+            }
+            else 
+            {
+                if(i &gt; K)
+                {
+                    update(-1, Data[i - K]);
+                    // 만약 K가 넘어가는 수는 바로 앞에 수를 제거해 주어야 한다.
+                    
+                }               
+                update(1, Data[i]);
+                SUM += search(Mid);
+                // 중앙값 찾기
+            }
+        }
+        System.out.println(SUM);
+        sc.close();     
+    }
+}
+
+
+</pre>
+
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/Mid.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이---오큰수-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/17298" target="_blank"> 오큰수 </a></h6>
+<p class="text-danger">해당 문제의 핵심은 어떻게 쌓을 것인가. 어떻게 최신인가.</p>
+<ul>
+  <li>뒤에서부터 쌓아야 한다.</li>
+  <li>어떻게 뺄것인가.</li>
+  <li>그리고 StringBuilder를 이용해야 속도가 빠르다!</li>
+</ul>
+<p>1. 전체 다 집어넣기</p>
+<p>2. 뒤에서 부터 시작</p>
+<p>3. stack이 비어있으면 -1, 존재하면 피크</p>
+<p>4. 피크보다 지금 숫자가 작으면 해당 이하 숫자 비우기</p>
+<pre>
+
+public static void main(String args[]){
+    //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    Scanner sc = new Scanner(System.in);
+    try {
+        int total       = sc.nextInt();
+        int[] inputNum = new int[total]; 
+        Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;(); 
+        StringBuilder result  = new StringBuilder();
+        //O(N)
+        for (int index = 0; index &lt; total; index++) {
+            int number = sc.nextInt();
+            inputNum[index] = number;
+        }
+        //O(N)
+        for ( int index = inputNum.length-1; index &gt;= 0; index-- ) {
+            int thisIndex = inputNum[index];
+            //스택 맨 꼭대기에 있는 숫자가 자기보다 작거나 같으면 지우기
+            while( !stack.isEmpty() &amp;&amp; thisIndex &gt;= stack.peek() ) {
+                stack.pop();
+            }
+            //꼭대기에 있는 숫자를 채우기
+            if( stack.isEmpty() ) {
+                inputNum[index] = -1;
+            } else {
+                inputNum[index] = stack.peek();
+            }
+            //다시 넣기
+            stack.add(thisIndex);
+        }
+        for (Integer integer : inputNum) {
+            result.append(integer+ " ");
+        }
+        System.out.println(result);
+        
+    } catch (Exception e) {
+        System.out.println(e);
+    } 
+}
+
+</pre>
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/OBig17298.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이---조세퍼스-문제-0-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/11866" target="_blank"> 조세퍼스 문제 0 </a></h6>
+<p class="text-danger">순회를 돌아야하는 자료구조</p>
+<ul>
+  <li>QUE를 쓰면 편하다. 맨위에 있는 것을 아래로 넣기 ( insert , update에대해 시간복잡도가 O(1) )</li>
+</ul>
+<pre>
+    
+public static void main(String args[]){
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    //Scanner sc = new Scanner(System.in);
+    try {
+        String[] input = br.readLine().split(" ");
+        int total = Integer.parseInt(input[0]);
+        int k = Integer.parseInt(input[1]);
+        int tempt = 0;
+        Queue&lt;Integer&gt; que = new LinkedList&lt;Integer&gt;();
+        StringBuilder result = new StringBuilder();
+        result.append("&lt;");
+        
+        for (int index = 1; index &lt;= total; index++) {
+            que.add(index);
+        }
+        while(que.size() &gt; 0) {
+            // 큐의 순회 돌기
+            for (int index = 0; index &lt; k-1; index++) {
+                int temp = que.poll();
+                que.add(temp);
+            }
+            
+            // 맨 위에 있는 친구 넣기
+            result.append(que.poll());
+            if( que.size() == 0 ) {
+                result.append("&gt;");
+            } else {
+                result.append(", ");
+            }
+        }
+        System.out.println(result);
+    } catch (Exception e) {
+        System.out.println(e);
+    } 
+}
+    
+</pre>
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/ok/beak/Beak11866Que.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이---ac-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/5430" target="_blank"> AC </a></h6>
+<p class="text-danger">시간 복잡도에 대한 고민</p>
+<ul>
+  <li>내가 푼 코드는 왜 시간 초과가 날까?</li>
+</ul>
+<pre>
+1차 코드 
+ : pop , poll등 시간복잡도가 1이니 Deque 순회로 데이터 구조를 하면 어떨까?
+ : 잘못된 생각이였음 . 결국은 업데이트 자체는 전체값을 바꿔주게 된다.
+
+public class Main {
+    public static void main(String args[]){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            int total = Integer.parseInt(br.readLine());
+            for (int totalIndex = 0; totalIndex &lt; total; totalIndex++) {
+                String[] order = br.readLine().split("");
+                int secondLine = Integer.parseInt(br.readLine());
+                String[] arrayNumber = br.readLine().split(",");
+                AC acData = new AC(arrayNumber);
+                Boolean result = true;
+                if( order.length + secondLine &lt;= 700000 ) {
+                    // 최대 N = 100,000
+                    for (int orderIndex = 0; orderIndex &lt; order.length; orderIndex++) {
+                        if( order[orderIndex].indexOf("R") &gt; -1 ) {
+                            acData.reverse();
+                        } else {
+                            if(!acData.destroy()) {
+                                result = false;
+                                break;
+                            }
+                            
+                        }
+                    }
+                } else {
+                    result = false;
+                }
+                if(result) {
+                    acData.print();
+                } else {
+                    System.out.println("error");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } 
+    }
+}
+
+class AC {
+    Deque&lt;Integer&gt; data = new LinkedList&lt;Integer&gt;();
+    
+    public AC ( String[] arrayNumber ) {
+        for (int index = 0; index &lt; arrayNumber.length; index++) {
+            String num  = arrayNumber[index].replaceAll("\\[", "").replaceAll("\\]", "");
+            if(!num.equals("")) {
+                data.add(Integer.parseInt(num));
+            }
+        }
+    }
+    
+    public void reverse() {
+        Deque&lt;Integer&gt; temp = new LinkedList&lt;Integer&gt;();
+        // 여기 자체가 최대 10만이 되버림
+        // 10만 *10만으로 되어버려 결국은 오버.
+        for (int index = data.size()-1; index &gt;= 0; index--) {
+            temp.addLast(data.pollLast());
+        }
+        data = temp;
+    }
+    
+    public Boolean destroy() {
+       Boolean result = true;
+       if(!data.isEmpty()) {
+           data.pollFirst(); 
+       } else {
+           result = false;
+       }
+       return result;
+    }
+    
+    public void print() {
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        int totalSize = data.size();
+        for (int index = 0; index &lt; totalSize; index++) {
+            result.append(data.pollFirst());
+            if( data.size() != 0 ) {
+                result.append( ",");
+            } else {
+                result.append( "]");
+            }
+        }
+        System.out.println(result);
+    }
+}
+
+2. 2차 코드 시간 복잡도를 줄여볼까! 
+ : 착각이였다. 함정카드 발동
+
+public class Main {
+    public static void main(String args[]){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            //String[] firstLine = br.readLine().split(" ");
+            //String[] secondLine = br.readLine().split(" ");
+            //int total = Integer.parseInt(firstLine[0]);
+            int total = Integer.parseInt(br.readLine());
+            for (int totalIndex = 0; totalIndex &lt; total; totalIndex++) {
+                String[] order = br.readLine().split("");
+                int secondLine = Integer.parseInt(br.readLine());
+                String[] arrayNumber = br.readLine().split(",");
+                AC acData = new AC(arrayNumber);
+                Boolean result = true;
+                // 최대 N = 10만
+                for (int orderIndex = 0; orderIndex &lt; order.length; orderIndex++) {
+                    if( order[orderIndex].indexOf("R") &gt; -1 ) {
+                        acData.reverse();
+                    } else {
+                        if(!acData.destroy()) {
+                            result = false;
+                            break;
+                        }
+                        
+                    }
+                }
+                if(result) {
+                    acData.print();
+                } else {
+                    System.out.println("error");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } 
+    }
+}
+
+class AC {
+   int[] data;
+   int reverseIndex = 0;
+   int direction = 0; // 0은 오른쪽 , 1은 왼쪽
+    
+    public AC ( String[] arrayNumber ) {
+        if(!arrayNumber[0].equals("[]")) {
+            data = new int [arrayNumber.length];
+        } else {
+            data = new int[0];
+        }
+        for (int index = 0; index &lt; arrayNumber.length; index++) {
+            String num  = arrayNumber[index].replaceAll("\\[", "").replaceAll("\\]", "");
+            if(!num.equals("")) {
+                data[index] = Integer.parseInt(num);
+            }
+        }
+    }
+    
+    public void reverse() {
+        if(data.length !=0 ) {
+            if( direction == 0 ) {
+                if(--reverseIndex &lt; 0 ) {
+                    reverseIndex = data.length-1;
+                }
+                
+            } else {
+                if(++reverseIndex &gt;= data.length ) {
+                    reverseIndex = 0;
+                }
+            }
+            direction = direction == 0 ? 1 : 0;
+            // 여기 부분의 함정카드 findStart자체으 최대치는 결국 10만
+            findStart();
+        }
+    }
+    
+    public Boolean destroy() {
+       Boolean result = true;
+       if( data.length != 0 &amp;&amp; data[reverseIndex] != -1 ) {
+           data[reverseIndex] = -1;
+           findStart();
+       } else {
+           result = false;
+       }
+       return result;
+    }
+    
+    public void findStart() {
+        int total = 0;
+        while(data[reverseIndex] == -1 &amp;&amp; total &lt; data.length) {
+            if( direction == 0 ) {
+                if(++reverseIndex &gt;= data.length ) {
+                    reverseIndex = 0;
+                }
+            } else {
+                if(--reverseIndex &lt; 0 ) {
+                    reverseIndex = data.length-1;
+                }
+            }
+            total++;
+        }
+    }
+    
+    public void print() {
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        int dataLength = data.length;
+        if( dataLength != 0 ) {
+            if(data[reverseIndex] != -1) result.append(data[reverseIndex]);
+            result.append(",");
+            for (int index = 1; index &lt; dataLength; index++) {
+                if( direction == 0 ) {
+                    if(++reverseIndex &gt;= dataLength ) {
+                        reverseIndex = 0;
+                    }
+                    if( data[reverseIndex] != -1 ) {
+                        result.append( data[reverseIndex]);
+                        result.append(",");
+                    }
+                } else {
+                    if(--reverseIndex &lt; 0 ) {
+                        reverseIndex = dataLength-1;
+                    }
+                    if( data[reverseIndex] != -1 ) {
+                        result.append( data[reverseIndex]);
+                        result.append(",");
+                    }
+                }
+            }
+            int lastIndex = result.lastIndexOf(",");
+            result.replace(lastIndex, lastIndex+1, "");
+        }
+        result.append("]");
+        System.out.println(result);
+    }
+}
+
+*********최종! 와리가리로 결국 품 시작과 끝의 위치.
+public class AC5430 {
+    public static void main(String args[]){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            //String[] firstLine = br.readLine().split(" ");
+            //String[] secondLine = br.readLine().split(" ");
+            //int total = Integer.parseInt(firstLine[0]);
+            int total = Integer.parseInt(br.readLine());
+            for (int totalIndex = 0; totalIndex &lt; total; totalIndex++) {
+                String[] order = br.readLine().split("");
+                int secondLine = Integer.parseInt(br.readLine());
+                String[] arrayNumber = br.readLine().split(",");
+                AC acData = new AC(arrayNumber);
+                Boolean result = true;
+                for (int orderIndex = 0; orderIndex &lt; order.length; orderIndex++) {
+                    if( order[orderIndex].indexOf("R") &gt; -1 ) {
+                        acData.reverse();
+                    } else {
+                        if(!acData.destroy()) {
+                            result = false;
+                            break;
+                        }
+                        
+                    }
+                }
+                if(result) {
+                    acData.print();
+                } else {
+                    System.out.println("error");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } 
+    }
+}
+
+class AC {
+   int[] data;
+   int reverseIndex = 0;
+   int direction    = 0; // 0은 오른쪽 , 1은 왼쪽
+   int left         = -1; // 왼쪽 시작점
+   int right        = -1; // 오른쪽 시작점
+    
+    public AC ( String[] arrayNumber ) {
+        if(!arrayNumber[0].equals("[]")) {
+            data    = new int [arrayNumber.length];
+            left    = 0;
+            right   = data.length-1;
+        } else {
+            data = new int[0];
+        }
+        for (int index = 0; index &lt; arrayNumber.length; index++) {
+            String num  = arrayNumber[index].replaceAll("\\[", "").replaceAll("\\]", "");
+            if(!num.equals("")) {
+                data[index] = Integer.parseInt(num);
+            }
+        }
+    }
+    
+    public void reverse() {
+        direction = direction == 0 ? 1 : 0;
+        findStart();
+    }
+    
+    public Boolean destroy() {
+       Boolean result = left != -1 &amp;&amp; data[reverseIndex] != -1;
+       if( result ) {
+           data[reverseIndex] = -1;
+           if(left != right) {
+               if(direction == 0) {
+                   left++;
+               } else {
+                   right--;
+               }
+           }
+           findStart();
+       } 
+       return result;
+    }
+    
+    public void findStart() {
+        if( direction == 0 ) {
+            if(++reverseIndex &gt; right ) {
+                reverseIndex = left;
+            }
+        } else {
+            if(--reverseIndex &lt; left ) {
+                reverseIndex = right;
+            }
+        }
+    }
+    
+    public void print() {
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        if( left != -1 &amp;&amp; data[reverseIndex] != -1 ) {
+            if( direction == 0 ) {
+                for (int index = left; index &lt;= right; index++) {
+                    result.append(data[index]);
+                    if(index != right) result.append(",");
+                }
+            } else {
+                for (int index = right; index &gt;= left; index--) {
+                    result.append(data[index]);
+                    if(index != left) result.append(",");
+                }
+            }
+        }
+        result.append("]");
+        System.out.println(result);
+    }
+}
+
+</pre>
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/AC5430.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+:ET

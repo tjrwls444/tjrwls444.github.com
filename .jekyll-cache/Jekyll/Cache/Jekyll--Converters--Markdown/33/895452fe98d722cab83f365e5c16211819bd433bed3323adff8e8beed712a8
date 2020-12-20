@@ -1,0 +1,26 @@
+I"F<p class="bold-text"> 1. jqury CDN 있는 버전</p>
+<ul>
+  <li>에디터 열기 싫을 때 복붙해서  사용하기.</li>
+</ul>
+<pre>
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt;
+        &lt;meta name="title" content="board"&gt;
+        &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+        &lt;title&gt;Board&lt;/title&gt;
+        &lt;!-- 
+        &lt;link rel="shortcut icon" href="img/favicon.png"&gt;
+        &lt;link rel="apple-touch-icon" href="img/favicon.png" sizes="144x144"&gt;
+        &lt;script src="js/common.js"&gt;&lt;/script&gt;
+        &lt;link rel="stylesheet" href="css/board/page.css" type="text/css"&gt;
+        --&gt;
+        &lt;script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+:ET

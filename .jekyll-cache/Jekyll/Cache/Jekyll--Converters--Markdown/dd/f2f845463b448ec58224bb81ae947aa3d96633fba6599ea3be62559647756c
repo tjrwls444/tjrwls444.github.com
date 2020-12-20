@@ -1,0 +1,16 @@
+I"�<h3> Posts by Category : 깃 블로그 </h3>
+
+<div class="card no-margin">
+
+ <li class="category-posts"><span>01 Jul 2019</span> &nbsp; <a class="no-br" href="/posts/how-to-ues-jekyll-google/">나도 GIT블로그 하고싶다.<br />( 구글검색 )</a></li>
+
+ <li class="category-posts"><span>25 Jun 2019</span> &nbsp; <a class="no-br" href="/posts/how-to-ues-jekyll-summary/">나도 GIT블로그 하고싶다.<br />( 요약편 )</a></li>
+
+ <li class="category-posts"><span>23 Jun 2019</span> &nbsp; <a class="no-br" href="/posts/how-to-ues-jekyll-apply/">나도 GIT블로그 하고싶다.<br />( 응용편 )</a></li>
+
+ <li class="category-posts"><span>22 Jun 2019</span> &nbsp; <a class="no-br" href="/posts/how-to-ues-jekyll-grammer/">나도 GIT블로그 하고싶다.<br />( 문법편  )</a></li>
+
+ <li class="category-posts"><span>17 Jun 2019</span> &nbsp; <a class="no-br" href="/posts/how-to-ues-jekyll-settings/">나도 GIT블로그 하고싶다.<br />( 세팅편 )</a></li>
+
+</div>
+:ET

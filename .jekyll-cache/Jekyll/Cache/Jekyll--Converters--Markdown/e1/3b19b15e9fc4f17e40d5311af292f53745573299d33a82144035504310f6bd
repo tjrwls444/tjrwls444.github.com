@@ -1,0 +1,614 @@
+I"�[<h5 id="풀어보기---백준-알고리즘자료구조편">풀어보기 : <a href="https://www.acmicpc.net/problem/tag/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0" target="_blank"> 백준 알고리즘(자료구조편)</a></h5>
+
+<p><br /></p>
+<h6 id="해당-문제-풀이---회사에-있는-사람-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/7785" target="_blank"> 회사에 있는 사람 </a></h6>
+
+<p class="text-danger bold-text">Map Key를 ArratList에 담기 </p>
+<pre>
+
+emmployNameSort = new ArrayList&lt;String&gt;(employName.keySet());
+
+</pre>
+
+<p class="text-danger bold-text">HashMap 역순 정렬</p>
+<ul>
+  <li>Collections.reverse()는 제대로된 역순 정렬이 되지 않아 아래 방법으로 해결</li>
+</ul>
+<pre>
+
+ Collections.sort(emmployNameSort,Collections.reverseOrder());
+
+</pre>
+
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/HowManyPeopleInMyCompany.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이---패션왕-신해빈-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/9375" target="_blank"> 패션왕 신해빈 </a></h6>
+<p class="text-danger bold-text">HashMap 전체출력 간편한 코드</p>
+<pre>
+
+for( String key : totalCase.keySet() ){
+    result *= ( totalCase.get(key).size() +1);
+}
+
+</pre>
+
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/HowManyGetMyClose.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이---나는야-포켓몬-마스터-이다솜-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/1620" target="_blank"> 나는야 포켓몬 마스터 이다솜 </a></h6>
+<p class="text-danger bold-text">HashMap, ArrayList 두가지 방법이 아니 HashMap만 사용해서 풀 수 있는 경우. </p>
+<pre>
+
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+ArrayList&lt;String&gt; pocketMonData         = new ArrayList&lt;String&gt;();
+pocketMonData.add("");
+Map&lt;String, Integer&gt; pocketMonDataMap   = new HashMap&lt;String, Integer&gt;(); 
+try {
+    String [] inputFirst        = br.readLine().split(" ");
+    int pocketMonsterCount      = Integer.parseInt(inputFirst[0]);
+    int questionCount           = Integer.parseInt(inputFirst[1]);
+    for ( int index = 0; index &lt; pocketMonsterCount; index++ ) {
+        String data = br.readLine();
+        pocketMonData.add(data);
+        pocketMonDataMap.put(data, index+1);
+    }
+    for ( int index = 0; index &lt; questionCount; index++) {
+        String question = br.readLine();
+        if(Pattern.matches("^[0-9]*$", question)) {
+            System.out.println(pocketMonData.get(Integer.parseInt(question)));
+        } else {
+            System.out.println( pocketMonDataMap.get(question) );
+        }
+    }
+} catch (Exception e) {
+
+}
+
+</pre>
+<ul>
+  <li>생각을 바꿔서 HashMap으로만 한다면!? » 발상의 전환</li>
+</ul>
+
+<pre>
+
+Scanner sc = new Scanner(System.in);
+HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();
+
+int n = sc.nextInt();
+int m = sc.nextInt();
+
+for(int i=1;i&lt;=n;i++) {
+    String s = sc.next();
+    map.put(s, Integer.toString(i));
+    map.put(Integer.toString(i),s);
+}
+for(int i=0;i&lt;m;i++) {
+    String s = sc.next();
+    System.out.println(map.get(s));
+}
+
+</pre>
+
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/Pocketmon.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이---이진-검색-트리-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/5639" target="_blank"> 이진 검색 트리 </a></h6>
+<p class="text-danger bold-text"> 왜 2진트리가 자료구조에 속하는지 정확한 개념이 없었음</p>
+<p class="text-danger bold-text"> 결론은 조건에 따라 2진트리의 자료구조를 내가 만드는 것 </p>
+
+<ul>
+  <li>1차 : 알고리즘을 위해 회귀를 사용하지 않고 1개일때를 전제로 작성</li>
+</ul>
+<pre>
+
+class BinaryTree {
+    int node;
+    BinaryTree left;
+    BinaryTree right;
+    
+    public BinaryTree( int node ) {
+        this.node   = node;
+        this.left  = null;
+        this.right  = null;
+    }
+   
+     public BinaryTree addTree ( BinaryTree orignalTree, int value ) {
+        BinaryTree tempBinaryTree = new BinaryTree(value);
+        if( value &lt; orignalTree.node ) {
+            orignalTree.lefet = tempBinaryTree;
+        } else if( value &gt; orignalTree.node ) {
+            orignalTree.right = tempBinaryTree;
+        }
+        return orignalTree;
+    }
+    
+}
+
+
+</pre>
+
+<ul>
+  <li>2차 : 달려야 하는 것은 무엇인가 ? 반복되어야 하는것은 무엇인가?</li>
+  <li>왼쪽 오른쪽은 트리데이터가 달릴수 있다.</li>
+  <li>반복은 좌우에 단다.</li>
+</ul>
+
+<pre>
+
+public BinaryTree addTree ( BinaryTree orignalTree, int value ) {
+    if( orignalTree == null ) return new BinaryTree(value);
+    if( value &lt; orignalTree.node ) {
+        orignalTree.left = addTree(orignalTree.left, value);
+    } else if( value &gt; orignalTree.node ) {
+        orignalTree.right = addTree(orignalTree.right,value);
+    }
+    return orignalTree;
+}
+
+</pre>
+
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/GetBinaryTree.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이--합이-0인-네-정수-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/7453" target="_blank">합이 0인 네 정수 </a></h6>
+<p class="bold-text">1. 시간 복잡도</p>
+<ul>
+  <li>O(1) : 입력되는 N과 상관없이 일정한 시행시간을 가진다.</li>
+  <li>O(logN) : 자료가 증가함에 따라 수렴 , 2진 검색</li>
+  <li>O(N) : 정비례 , 선형</li>
+  <li>O(N^2) : 따따블  - for문에 for문</li>
+  <li>O(NlogN) : N배가 많아지면 N배보다 조금 증가 , 커다란 문제를 독립문제로 쪼개고 다시 하나로 모으는 경우
+    <blockquote>
+      <blockquote>
+        <p>해당 문제를 전체 탐색으로 풀 경우 총 개수가 4000개로 O(N^4) 즉 4경이 넘어버려 전체탐색은 맞지 않는다.</p>
+      </blockquote>
+    </blockquote>
+  </li>
+</ul>
+
+<p class="text-danger bold-text">Merg : 합치기 - 2개의 그룹을 하나로 묶어 두 그룹의 합이 0인 것을 찾는다.</p>
+<pre>
+
+// 로직은 맞지만 너무 많은 메모리릴 사용한다고 ;;;;; 메모리 초가가 남.
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+int totalRow =  Integer.parseInt(br.readLine());
+ArrayList&lt;Integer&gt; firstIndex = new ArrayList&lt;Integer&gt;();
+ArrayList&lt;Integer&gt; secondIndex = new ArrayList&lt;Integer&gt;();
+ArrayList&lt;Integer&gt; thirdIndex = new ArrayList&lt;Integer&gt;();
+ArrayList&lt;Integer&gt; fourIndex = new ArrayList&lt;Integer&gt;();
+for( int index = 0; index &lt; totalRow; index++ ) {
+    String [] inputData  = br.readLine().split(" ");
+     firstIndex.add(Integer.parseInt(inputData[0]));
+     secondIndex.add(Integer.parseInt(inputData[1]));
+     thirdIndex.add(Integer.parseInt(inputData[2]));
+     fourIndex.add(Integer.parseInt(inputData[3]));
+}
+//1. 2개의 그룹으로 묶기  HashMap&lt; 숫자, 중복 갯수 &gt; 로 담기
+Map&lt;Integer, Integer&gt; firstGroup = new HashMap&lt;Integer, Integer&gt;();
+Map&lt;Integer, Integer&gt; secondGroup = new HashMap&lt;Integer, Integer&gt;();
+
+for( int firstData = 0; firstData &lt; totalRow; firstData++   ) {
+    for( int secondData = 0; secondData &lt; totalRow; secondData++ ) {
+        int totalSumFirstSecond    = firstIndex.get(firstData) + secondIndex.get(secondData);
+        int totalSumThirdFour    = thirdIndex.get(firstData) +  fourIndex.get(secondData);
+        
+        if( firstGroup.containsKey( totalSumFirstSecond ) ) {
+            firstGroup.replace(totalSumFirstSecond, firstGroup.get(totalSumFirstSecond)+1);
+        } else {
+            firstGroup.put(totalSumFirstSecond, 1);
+        }
+        if( secondGroup.containsKey( totalSumThirdFour ) ) {
+            secondGroup.replace(totalSumThirdFour, secondGroup.get(totalSumThirdFour)+1);
+        }else {
+            secondGroup.put(totalSumThirdFour, 1);
+        }
+    }
+}
+
+// 찾기 
+int sizeFisrt   = firstGroup.size();
+int sizeSecond  = secondGroup.size();
+int result      = 0;
+Map&lt;Integer, Integer&gt; loop;
+Map&lt;Integer, Integer&gt; seek;
+if( sizeFisrt &lt; sizeSecond ) {
+    loop = firstGroup;
+    seek = secondGroup;
+} else {
+    loop = secondGroup;
+    seek = firstGroup;
+}
+System.out.println(firstGroup);
+System.out.println(secondGroup);
+
+for( int key :  loop.keySet()) {
+    int temt = -(key);
+    if(seek.containsKey(temt)) {
+        result += (loop.get(key) *seek.get(temt) );
+    }
+}
+System.out.println(result);
+
+// 같은 개념이지만 좀 더 깔끔하게 짠 남의 코드 
+Scanner sc = new Scanner(System.in);
+int n = sc.nextInt();
+int[][] arr = new int[n][4];
+long answer = 0;
+Map&lt;Integer,Integer&gt; map = new HashMap&lt;Integer,Integer&gt;();
+for(int i=0;i&lt;n;i++)
+    for(int j=0;j&lt;4;j++)
+        arr[i][j] = sc.nextInt();
+
+for(int i=0;i&lt;n;i++)
+    for(int j=0;j&lt;n;j++) {
+        int tmp = arr[i][0] + arr[j][1];
+        if(map.containsKey(tmp))
+            map.replace(tmp, map.get(tmp)+1);
+        else
+            map.put(tmp, 1);
+    }
+for(int i=0;i&lt;n;i++)
+    for(int j=0;j&lt;n;j++) {
+        int tmp = (arr[i][2]+arr[j][3])*-1;
+        if(map.containsKey(tmp)) //AB + CD == 0?
+            answer += map.get(tmp);
+    }
+System.out.println(answer);
+
+
+</pre>
+
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/TimeComplexity.java" target="_blank">전체 코드 보기</a></p>
+
+<p><br /><br /></p>
+<p>** 번외</p>
+<p class="text-danger bold-text">  내가 못하는 회귀함수 </p>
+<pre>
+
+int result=0;
+for(int first : total ) {
+    for(int second : total) {
+        for(int third : total) {
+            for( int four : total ) {
+                if(first+second+third+four == 0) result++;
+            }
+        }
+    }
+}
+
+</pre>
+<p>1. return 정하기 : int result</p>
+<p>2. 반복되는 로직 찾기 : first+second+third+four ... 과 for문 =&gt; 부모것 + 자기것 합친것</p>
+<p>3. 종료조건 : 4번째 턴에 종료</p>
+<pre>
+
+public static void getResult( ArrayList&lt;Integer&gt; total, int result, int parent, int index ){
+    if( index == 4 &amp;&amp; parent == 0 ) result++;
+    if( index == 4 ) return result;
+    
+    index++;
+    
+     for( int data : total ) {
+       int tempParent = parent + data;
+        return getResult( total, tempParent, result, tempParent, index );
+     }
+     return result;
+}
+
+</pre>
+
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이---영화-수집-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/3653" target="_blank"> 영화 수집 </a></h6>
+<p class="text-danger bold-text"> 펜윅트리란 </p>
+<p class="text-danger bold-text"> 부분합을 구할때 유용 </p>
+<ul>
+  <li>정의 : Panwork tree ( Tree[i] )란 A[i]가 주어졌을 때, A[i]로부터 앞으로 ㄴ<a href="해당 수를 2진수로 나타냈을때 마지막 i의 값">i</a>의 합이 저장되도록 미리 만들어 
+ 놓은 자료구조 (마지막 1이 나타내는 값을 L[i]라고 표현)</li>
+  <li>Ex : T[12] » T[1100(2)] » 해당 이진수에서 마지막 1의 위치만 남겨 놓으면 0100 » 4 (원본 A의 앞 4개의 합) » 즉 T[12] = A[12] + A[11] + A[10] + A[9]의 값이 저장되어 있음.</li>
+  <li>해당 알고리즘 구현</li>
+</ul>
+<pre>
+
+class FenwickTree{
+    int tree [];
+    
+    public FenwickTree(int size) {
+        tree = new int[size];
+    }
+    public void update(int p, int val) {
+        while (p &lt; tree.length) {
+            tree[p] += val;
+            p += p &amp; (-p); 
+            // p &amp; (-p)의 의미는 자기 자신을 2진수로 만들고 마지막 1의 자리만 남긴것
+            // T[1] &gt;&gt; p&amp;(-p) = 1(2)= 1 &gt;&gt; 1+=1 = T[2]
+            // T[2] &gt;&gt; p&amp;(-p) = 10(2)= 2 &gt;&gt; 2+=2 = T[4]
+            // T[4] &gt;&gt; p&amp;(-p) = 100(2)= 4 &gt;&gt; 4+=4 = T[8] ....
+        }
+    }
+    public int sum(int p) {
+        int res = 0;
+        while (p &gt; 0) {
+            res += tree[p];
+            p &amp;= p-1;
+            //tree[12] &gt;&gt; 1100(2) &amp; 1011(2 10진수로 11) &gt;&gt; 1000(2) == 8
+            //tree[8] &gt;&gt; 1000(2) &amp; 111(2) = 0 &gt;&gt; break;
+        }
+        return res;
+    }
+}
+
+</pre>
+
+<ul>
+  <li>해당 문제 해결 : original[N+1] = 1번 책의 Tree 내 위치 , 2번 책의 Tree 내  위치 , 3번 책의 Tree 내  위치</li>
+  <li>[0,0,1,1,1] 해당 배열(N+M+1)(1번 비디오 1개, 2번 비디오 1개….)로 Tree를 구성해놓음(1번 비디오 앞에 몇개 있냐 , 2번 
+비디오 앞에 몇개 있냐 , 그리고 비디오 봤을 때, 트리를 업데이트 하는것으로 구성을 간단하게 해놓음)</li>
+  <li>Tree의 크기 : 총 책 수 + 몇 비디오 볼 것인가.</li>
+  <li>1번 볼때마다 : Tree값 업데이트 [ 1칸씩 앞으로 옮김 ] , original위치 업데이트</li>
+  <li>EX ) 비디오 3개, 3번 비디오 1번 본다 » original[4] = [0,2,3,4] » tree에서 해당 비디오 위치 » 3번 비디오 
+볼 시 3번은 맨 앞으로 이동 » original[4] = [0,2,3,1] , Tree 업데이트 [ 0,1,1,0,1 ] » 3번 앞에 있는 
+비디오 합은 0이 되버림 (original[3] = 1 » temp = [0,1,1,0,1] 에서 temp[1] 의 앞 배열의 값의 합은 0임 ==Tree[1] 
+= 0)</li>
+</ul>
+<pre>
+
+public class Main{
+    public static void main(String args[]) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int totaExam = Integer.parseInt(br.readLine());
+        for ( int row = 0; row &lt; totaExam; row++ ) {
+            String next[] = br.readLine().split(" ");
+            
+            int videoNumber = Integer.parseInt(next[0]);
+            int totalCheck  = Integer.parseInt(next[1]);
+            int original [] = new int[ videoNumber + 1 ];
+            FenwickTree fenwickTree = new FenwickTree(videoNumber + totalCheck +1);
+            
+            String videoDetail[] = br.readLine().split(" ");
+             
+            for(int putTree = 1; putTree &lt;= videoNumber; putTree++) {
+                original[putTree] = putTree+totalCheck;
+                fenwickTree.update(original[putTree], 1);
+            }
+            
+            for( int showVideo = 0; showVideo &lt; totalCheck; showVideo ++) {
+                int show =  Integer.parseInt(videoDetail[showVideo]);
+                System.out.println(fenwickTree.sum(original[show])-1);
+                fenwickTree.update( original[show] , -1 );
+                original[show] = totalCheck - showVideo;
+                fenwickTree.update( original[show] , 1 );
+            }
+        }
+    }
+}
+
+class FenwickTree{
+    int tree [];
+    
+    public FenwickTree(int size) {
+        tree = new int[size];
+    }
+    public void update(int p, int val) {
+        while (p &lt; tree.length) {
+            tree[p] += val;
+            p += p &amp; (-p);
+        }
+    }
+    public int sum(int p) {
+        int res = 0;
+        while (p &gt; 0) {
+            res += tree[p];
+            p &amp;= p-1;
+        }
+        return res;
+    }
+}
+
+</pre>
+<p class="text-danger">참고 URL</p>
+<ul>
+  <li><a href="https://www.acmicpc.net/blog/view/21" target="_blank"> https://www.acmicpc.net/blog/view/21</a></li>
+  <li><a href="https://stack07142.tistory.com/297" target="_blank"> https://stack07142.tistory.com/297</a></li>
+  <li><a href="https://m.blog.naver.com/PostView.nhn?blogId=occidere&amp;logNo=221059582892&amp;proxyReferer=https%3A%2F%2Fwww.google.com%2F" target="_blank"> https://m.blog.naver.com/PostView.nhn?blogId=occidere&amp;logNo=221059582892&amp;proxyReferer=https%3A%2F%2Fwww.google.com%2F</a></li>
+</ul>
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/PanworkTree.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이---하노이-탑-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/1914" target="_blank"> 하노이 탑 </a></h6>
+<p class="text-danger bold-text">회귀에 대한 개념 다시 확립</p>
+<p class="text-danger bold-text">double &gt;&gt; 8바이트 &gt;&gt; 최대 15개의 자리수 &gt;&gt; 2^100 같이 엄청 큰 수는 표현 불가 </p>
+<ul>
+  <li>반복되는 것은 무엇인가!</li>
+  <li>너무 세세한 것을 보지 말고 흐름만 기억하자
+<br /></li>
+</ul>
+<p class="bold-text">반복 패턴!</p>
+<p>1. 1번 기둥에 위치한 N개의 원판 중, 위에 있는 N-1개의 원판을 2번 기둥으로 옮긴다.</p>
+<p>2. 1번 기둥에 남아있는 1개의 원판을 3번 기둥으로 옮긴다.</p>
+<p>3. 2번 기둥에 있는 N-1개의 원판을 3번 기둥으로 옮긴다.</p>
+
+<pre>
+
+public static void main(String args[]) throws IOException{
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int N = Integer.parseInt(br.readLine());
+    BigInteger big = new BigInteger("1");
+
+    if(N &lt;= 20 ) {
+        System.out.println((1&lt;&lt;N)-1);
+        // 답부터 제출 (1&lt;&lt;n)은= 2^n을 나타냄 답은  2^n -1 왜냐면 기존것 옮기는것 2번을 해야 가능 + 마지막 원판 1
+        showCheck(N, 1, 2, 3);
+    } else {
+        // 20이 넘어버리면 2의 100승으로 long의 한계가 넘어감. 그때 사용하는 형
+        // 곱셈 덧샘 방법이 따로 있음
+        for( int index = 0 ; index &lt; N; index++ ) {
+            //big = big.multiply(BigInteger.TWO); &gt;&gt; BigInteger.TWO는 백준에서 못씀
+            big = big.multiply(new BigInteger("2"));
+        }
+        big = big.subtract(new BigInteger("1"));
+        System.out.println(big);
+    }
+    
+}
+
+public static void showCheck( int total,int from, int by, int to ) {
+    if( total == 1 ) {
+        System.out.println(from + " " + to); // 1개일때는 1번 -&gt; 3번으로 옮김
+    } else {
+        showCheck(total - 1, from, to, by);  // n-1개를 1번 -&gt; 2번으로 옮김
+        System.out.println(from + " " + to); // 남아있는 1개를 -&gt; 3번으로 옮긴다. 
+        showCheck(total - 1, by, from, to);  // n-1개를 2번 -&gt; 3번으로 옮긴다. 
+        // 세세한것을 더이상 보지 않을꺼임 의식에 흐름에 맡기기
+    }
+}
+
+</pre>
+
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/HanoiTower.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+<h6 id="해당-문제-풀이---빈도정렬-">해당 문제 풀이 : <a href="https://www.acmicpc.net/problem/2910" target="_blank"> 빈도정렬 </a></h6>
+<p class="text-danger bold-text">HashMap의 Key를 Vaulue 기준으로 정렬하기</p>
+<p class="text-danger bold-text"> Key만 List에 담는 간편한 방법</p>
+<p class="text-danger bold-text"> 오브젝트의 특정 변수를 기준으로 정렬하는 Comparator</p>
+<p class="text-danger bold-text"> Double 연산 (BigDecimal : 이전 방법)</p>
+<p><br /></p>
+
+<pre>
+
+public static void main(String args[]) throws IOException{
+    /*
+     * https://www.acmicpc.net/problem/2910
+     * 빈도정렬
+     * HashMap의 Key를 Vaulue 기준으로 정렬하기
+     * Key만 List에 담는 신박한 방법
+     * 오브젝트의 특정 변수를 기준으로 정렬하는 Comparator
+     * 먼저나온것 부터 정렬 , Double 연산 (BigDecimal)
+     */
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] firstLow   = br.readLine().split(" ");
+    String[] nextLow    = br.readLine().split(" ");
+    Map&lt;Integer, int[]&gt; result          = new HashMap&lt;Integer, int[]&gt;();
+    int n = Integer.parseInt(firstLow[0]);
+    for( int index = 0 ; index &lt; n; index++ ) {
+        int number = Integer.parseInt(nextLow[index]);
+        if( result.containsKey(number) ) {
+            int[] temp = {result.get(number)[0]+1,result.get(number)[1]};
+            result.replace(number, temp);
+        } else {
+            int[] temp = {1,index};
+            result.put(number, temp);
+        }
+    }
+    //Key만 List에 담기 
+    List&lt;Integer&gt; keys = new ArrayList&lt;Integer&gt;(result.keySet());
+    
+    // 비교하는데 비교하는 값들은 Integer이다.
+    // 해당 List들을 원하는 형식으로 정렬할 수 있음.
+    //Comparator&lt;Integer&gt;() &gt;&gt;&gt; Integer은 키값의 형
+     Collections.sort(keys, new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer a, Integer b) {
+            int[] tempA = result.get(a);
+            int[] tempB = result.get(b);
+            int compare = Integer.compare(tempB[0], tempA[0]); // 오름차순 정렬
+            if( compare == 0 ) {
+                return Integer.compare(tempA[1], tempB[1]); // 내림차순 정렬
+            } else {
+                return compare;
+            }
+        }
+        
+    });
+    
+    for( int item : keys ) {
+        for( int index = 0; index &lt; result.get(item)[0]; index++ )
+            System.out.print(item + " ");
+    }
+}
+
+</pre>
+
+<ul>
+  <li>다른 관점의 남의 코드<br />
+[ 숫자 , 회수]<br />
+[ 숫자 , 회수]<br />
+[ 숫자 , 회수]<br />
+  .<br />
+  .<br />
+  .<br />
+  .<br />
+ 2차 배열을 횟수로 내림차순 정렬</li>
+</ul>
+<pre>
+
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int[][] arr = new int[n][2];
+        int scale =sc.nextInt();
+        
+        for(int i=0;i&lt;n;i++) {
+            arr[i][1]=1;
+        }
+        
+        for(int i=0;i&lt;n;i++) {
+            arr[i][0]=sc.nextInt();
+            for(int k=0;k&lt;i;k++) {
+                if(arr[k][0]==arr[i][0]) {
+                    arr[k][1]++;
+                    arr[i][0]=0;
+                }
+            }
+        }
+        String tmep = "";
+        for( int index = 0; index&lt; arr.length; index++ ) {
+            tmep +="[";
+            for( int index2 = 0; index2 &lt; arr[index].length; index2++)
+                tmep = tmep +" [" +arr[index][index2] + "] ";
+            tmep +="]\n";
+        }
+        System.out.println(tmep);
+        //빈도순으로 내림차순정렬
+        for(int k=0;k&lt;n;k++) {
+            for(int i=0;i&lt;n-1;i++) {
+                if(arr[i][1]&lt;arr[i+1][1]) {
+                    int temp1=arr[i][1];
+                    int temp2=arr[i][0];
+                    arr[i][1]=arr[i+1][1];
+                    arr[i][0]=arr[i+1][0];
+                    arr[i+1][1]=temp1;
+                    arr[i+1][0]=temp2;
+                }
+            }
+        }
+        
+        for(int i=0;i&lt;n;i++) {
+            for(int k=0;k&lt;arr[i][1];k++) {
+                if(arr[i][0]!=0) {
+                    System.out.print(arr[i][0]+" ");
+                }
+                
+            }
+            
+        }
+    }
+
+</pre>
+
+<p class="bold-text"><a href="https://github.com/7271kim/Single_JAVA_Project/blob/master/src/algorithm/dataStructure/FrequencySort.java" target="_blank">전체 코드 보기</a></p>
+<p><br />
+<br /></p>
+
+:ET

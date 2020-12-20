@@ -1,0 +1,79 @@
+I"�<h3 id="1-정렬--선택정렬편">1. 정렬 : 선택정렬편</h3>
+
+<p class="bold-text"> i) 과정 </p>
+<ul>
+  <li>intput 배열 준비</li>
+  <li>첫번째 인덱스와와 다음인데스를 쭉 비교하여 마지막까지 비교 후 가장 작은 최소값을 찾는다. 그리고 교환한다(교환 1회)</li>
+  <li>두번째 인덱스와 마지막까지 비교하여 가장 작은 최소값을 찾는다. 그리고 교환한다</li>
+</ul>
+
+<p class="bold-text"> ii) 장점 </p>
+<ul>
+  <li>코드가 간단하다, 실제 교환 횟수가 적다</li>
+</ul>
+
+<p class="bold-text"> iii) 단점 </p>
+<ul>
+  <li>느리다</li>
+</ul>
+
+<p class="bold-text"> vi) 시간복잡도</p>
+<p>: O(n^2)</p>
+
+<pre>
+class SelectionSort {
+    private int [] data; 
+   
+    public SelectionSort( int[] data ){
+        this.data = data;
+    }
+    // 오름차순 정렬 1 2 3 4 5
+    public void ascendingSrot() {
+        sort(1);
+    }
+    
+    public void descendingSrot() {
+        sort(0);
+    }
+    
+    // 1이면 오름차순 , 0이면 내림차순
+    public void sort(int position) {
+        for (int index = 0; index &lt; data.length; index++) {
+            int change      = data[index];
+            int chgeIndex   = index;
+            for (int indexNext = index+1; indexNext &lt; data.length; indexNext++) {
+                Boolean next  = position == 1 ? data[indexNext] &lt; change : data[indexNext] &gt; change;
+                if(next) {
+                    change      = data[indexNext];
+                    chgeIndex   = indexNext;
+                }
+            }
+            // 데이터 변경 
+            if( chgeIndex != index) {
+                int temp    = data[index];
+                data[index] = change;
+                data[chgeIndex] = temp;
+            }
+        }
+    }
+    
+    public void print() {
+        StringBuilder result = new StringBuilder();
+        for (int i : data) {
+            result.append(i + " ");
+        }
+        System.out.println(result.toString());
+    }
+}
+
+**사용하기
+int[] data = {2,3,1,45,5};
+SelectionSort selection = new SelectionSort(data);
+
+selection.ascendingSrot();
+selection.print();
+
+selection.descendingSrot();
+selection.print();
+</pre>
+:ET

@@ -1,0 +1,17 @@
+I"Y<p class="bold-text">1. 일반 Java 프로젝트 jar 파일 만들기</p>
+<ul>
+  <li>jar 파일 실행 : 이클립스 우클릭 » Runable JAR file » main() 있는 클래스 선택 » 만들기</li>
+  <li>nohup java -jar settings.jar &amp; ( 백그라운드 실행 &amp; « 이거 자주 빼먹음 꼭 쓰기 )</li>
+</ul>
+
+<p class="bold-text">2. JAVA 자주 사용하는부분 개인 템플릿 세팅</p>
+<ul>
+  <li>Window &gt; Preferences &gt; Java &gt; Editor &gt; Template</li>
+</ul>
+<pre>
+formy &gt;&gt;&gt;
+for( int index = 0; index &lt; ${array}.length; index++  ){
+    ${cursor}
+}
+</pre>
+:ET

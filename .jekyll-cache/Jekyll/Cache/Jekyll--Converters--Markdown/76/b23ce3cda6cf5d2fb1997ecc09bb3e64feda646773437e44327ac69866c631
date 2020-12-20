@@ -1,0 +1,38 @@
+I"h<h5 id="풀어보기---백준-알고리즘">풀어보기 : <a href="https://www.acmicpc.net/step" target="_blank"> 백준 알고리즘</a></h5>
+
+<p><br /></p>
+<h6 id="해당-문제-풀이--httpswwwacmicpcnetproblem2588">해당 문제 풀이 <a href="https://www.acmicpc.net/problem/2588" target="_blank"> https://www.acmicpc.net/problem/2588</a></h6>
+
+<p class="bold-text"> 풀이핵심 </p>
+<ul>
+  <li>특정 수의 자리수 구하기</li>
+  <li>반복문과 종료되었을 때의 처리</li>
+</ul>
+<pre>
+public class Main {
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        try {
+            int firstNumber     = sc.nextInt();
+            int secondNumber    = sc.nextInt();
+            int sum             = firstNumber*secondNumber;
+            //while자체의 문은 종료조건이다.
+            while( secondNumber / 10 &gt; 0 ) {
+                // 반복
+                int digitOne = secondNumber %10;
+                int temp = firstNumber*digitOne;
+                System.out.println( temp );
+                secondNumber /= 10;
+            }
+            // 마지막 종료되었을때의 처리 - 자주 빼먹음
+            System.out.println(firstNumber*secondNumber);
+            System.out.println(sum);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        } 
+    }
+}
+
+</pre>
+:ET
