@@ -6,7 +6,7 @@
 - 레퍼지토리 이름 정리 : 7271kim(개인 계정 이름).github.com
 - _config.yml 설정 변경 : URL 수정  >> url: "7271kim.github.com" 
 - 접속확인 : https://7271kim.github.io/
-
+ 
 ### 기본 구조 
  https://jekyllrb-ko.github.io/docs/structure/
  <pre>
