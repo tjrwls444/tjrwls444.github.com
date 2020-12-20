@@ -10,12 +10,12 @@ layout: compress
 <!DOCTYPE html>
 
 {% capture prefer_mode %}
-  {% if site.theme_mode %}
+  {% unless site.theme_mode == "dual" %}
     mode="{{ site.theme_mode }}"
-  {% endif %}
+  {% endunless %}
 {% endcapture %}
 
-<html lang="{{ site.lang | split: "_" | first | default: "en" }}" {{ prefer_mode }}>
+<html lang="{{ site.lang | split: "_" | first | default: "en" }}" {{ prefer_mode }} >
 
   {% include head.html %}
 
@@ -40,10 +40,6 @@ layout: compress
 
     </div> <!-- #main-wrapper -->
 
-    {% if page.mermaid %}
-      {% include mermaid.html %}
-    {% endif %}
-
     <div id="mask"></div>
 
     <a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button">
@@ -51,6 +47,10 @@ layout: compress
     </a>
 
     {% include search-loader.html %}
+
+    {% if site.google_analytics.id and jekyll.environment == 'production' %}
+      {% include google-analytics.html %}
+    {% endif %}
 
   </body>
 
