@@ -1,105 +1,100 @@
---- 
-layout: default 
+---
+layout: page
+# The Home page layout
+# v2.0
+# https://github.com/cotes2020/jekyll-theme-chirpy
+# © 2017-2019 Cotes Chung
+# MIT Licensed
 ---
 
 
-    <div class="row">
+{% assign pinned = site.posts | where_exp: "item", "item.pin == true"  %}
+{% assign default = site.posts | where_exp: "item", "item.pin != true"  %}
+{% assign posts = "" | split: "" %}
 
-    <div class="col-lg-8">
+<!-- Get pinned posts -->
 
-        <div class="card">
-            <h1 class="card-title">About Me</h1>
+{% assign offset = paginator.page | minus: 1 | times: paginator.per_page %}
+{% assign pinned_num = pinned.size | minus: offset %}
 
-            <p> {{ site.author_bio }} </p>
-        </div>
-
-        <div class="card">
-            <h1 class="card-title"> Work Experience</h1>
-
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="/assets/img/work/google.png" class="company-logo" />
-                </div>
-                <div class="col-md-6">
-                    <h4 class="experience-title"> Full Stack Software Engineer</h4>
-                    <h6 class="experience-info">Google ( Jan 2017 - Present )</h6>
-                    <p class="experience-desc"> Worked on various technologies and built products which helps people globally </p>
-
-                </div>
-            </div>
-
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="/assets/img/work/microsoft.png" class="company-logo" />
-                </div>
-                <div class="col-md-6">
-                    <h4 class="experience-title"> Front End Engineer</h4>
-                    <h6 class="experience-info">Microsoft ( Mar 2015 - Dec 2016 )</h6>
-                    <p class="experience-desc"> Worked on various technologies and built products which helps people globally </p>
-
-                </div>
-            </div>
+{% if pinned_num > 0 %}
+  {% for i in (offset..pinned.size) limit: pinned_num %}
+    {% assign posts = posts | push: pinned[i] %}
+  {% endfor %}
+{% else %}
+  {% assign pinned_num = 0 %}
+{% endif %}
 
 
-        </div>
+<!-- Get default posts -->
 
-        <div class="card">
-            <h1 class="card-title"> Latest Projects</h1>
+{% assign default_beg = offset | minus: pinned.size %}
 
-            <br />
-            <div class="row">
-                <div class="col-md-5">
-                    <img src="/assets/img/projects/gamershub.png" class="project-img" />
-                </div>
-                <div class="col-md-5">
-                    <h4 class="project-title"> Gamers Hub </h4>
-                    <p class="project-desc"> A Platform built for Gamers and Game Developers built using NodeJS, VueJS, MongoDB</p>
-                    <a class="project-link" href="https://gamershub.in">https://gamershub.in</a>
-                </div>
-            </div>
+{% if default_beg < 0 %}
+  {% assign default_beg = 0 %}
+{% endif %}
 
-            <br />
-            <div class="row">
-                <div class="col-md-5">
-                    <img src="/assets/img/projects/hackify.png" class="project-img" />
-                </div>
-                <div class="col-md-5">
-                    <h4 class="project-title"> Hackify Theme for Atom Editor </h4>
-                    <p class="project-desc"> A dark hacking theme for Atom Editor</p>
-                    <a class="project-link" href="http://atom.io/themes/hackify-ui">Hackify UI</a>
-                </div>
-            </div>
+{% assign default_num = paginator.posts | size | minus: pinned_num  %}
+{% assign default_end = default_beg | plus: default_num | minus: 1 %}
 
-        </div>
+{% if default_num > 0 %}
+  {% for i in (default_beg..default_end) %}
+    {% assign posts = posts | push: default[i] %}
+  {% endfor %}
+{% endif %}
 
+
+<div id="post-list">
+
+{% for post in posts %}
+
+  <div class="post-preview">
+    <a href="{{ post.url | relative_url }}">
+      <h1>{{ post.title }}</h1>
+    </a>
+
+    <div class="post-content">
+      <p>
+        {% include no-linenos.html content=post.content %}
+        {{ content | markdownify | strip_html | truncate: 200 }}
+      </p>
     </div>
-    <div class="col-lg-4">
 
-        <div class="card">
+    <div class="post-meta text-muted d-flex justify-content-between">
 
-            <h6>
-                <i class="fas fa-map-marker-alt"></i> {{ site.author_location }}</h6>
-            <h6>
-                <i class="fas fa-envelope"></i> {{ site.author_email }}</h6>
-            <h6>
-                <i class="fas fa-link"></i> {{ site.author_website_url }} </h6>
+      <div>
+        <!-- posted date -->
+        <i class="far fa-calendar fa-fw"></i>
+        {% include timeago.html date=post.date tooltip=true %}
 
-        </div>
+        <!-- time to read -->
+        <i class="far fa-clock fa-fw"></i>
+        {% include read-time.html content=post.content %}
 
-        <div class="card">
-            <h1> Skills </h1>
-            <p> HTML , CSS , Javascript , PHP, Python, C</p>
-            <p> Adobe XD, Inkscape, Git, Linux </p>
-        </div>
+        <!-- page views -->
+        {% if site.google_analytics.pv.enabled %}
+        <i class="far fa-eye fa-fw"></i>
+        <span id="pv_{{-post.title-}}" class="pageviews">
+          <i class="fas fa-spinner fa-spin fa-fw"></i>
+        </span>
+        {% endif %}
+      </div>
 
-        <div class="card">
-            <h1> Coding Activity </h1>
+      {% if post.pin %}
+      <div class="pin">
+        <i class="fas fa-thumbtack fa-fw"></i>
+        <span>{{ site.data.label.pin_prompt }}</span>
+      </div>
+      {% endif %}
 
-            {%- include activity.html -%}
+    </div> <!-- .post-meta -->
 
-        </div>
+  </div> <!-- .post-review -->
 
-    </div>
-    </div>
+{% endfor %}
+
+</div> <!-- #post-list -->
+
+{% if paginator.total_pages > 0 %}
+  {% include post-paginator.html %}
+{% endif %}

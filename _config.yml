@@ -1,62 +1,183 @@
-title: 기록하는 개발자
-subtitle: STUDY Kim Seok Jin
-description: 
- Word 대신 이제는 Git 블로그를 시작해보자
-baseurl: "" 
-url: "https://tjrwls444.github.io/"
- 
-# 상단 네비 우측영역에 노출될 페이지 설정
-header_pages: 
- - "index.md"
- - "categories/all.md"
- - "tags/all.md"
- 
- # url에 한글을 입력하게 하고 싶지않아 카테고리 한글 , 영문 분기
-categories_korea: 
- - "gitBlog": "깃 블로그"
- - "algorithm": "알고리즘"
- - "travel": "여행"
- - "dataStructure" : "자료구조"
-author_logo: profile.png
-disqus_shortname: KIM SEOKJIN
-author: 김석진
-author_bio: jekyll devlopr템플릿으로 Base setting 
-author_email: "7271kim@naver.com"
-author_location: Korea
-author_website_url: "tomcat.honbabzone.com/list.do"
+title: Jin
 
-# Main에 자기소개 란
-intros: 
- - "좋은 개발자가 되고 싶은 사람"
- 
-# Main 및 페이지에서 사용될 소셜 링크 계정 세팅
-#twitter_username: yourusername
-github_username: 7271kim
-#facebook_username: seokjin.kim.16
-#linkedin_username: yourusername
-#behance_username: yourusername
-instagram_username: kimseokjin_albert
-#medium_username: yourusername 
-#telegram_username: yourusername
-#dribbble_username: yourusername 
-#flickr_username: yourusername
+tagline: A text-focused Jekyll theme.  # it will display as the sub-title
 
-# 한번 공부를 위해 세팅해봄
+description: >-                        # used by seo meta and the atom feed
+  A minimal, portfolio, sidebar,
+  bootstrap Jekyll theme with responsive web design
+  and focuses on text presentation.
+
+url: 'https://tjrwls444.github.io'
+
+author: Jin                  # change to your full name
+
+avatar: /assets/img/sample/avatar.jpg   # support internet resources
+
+github:
+  username: tjrwls444             # change to your github username
+
+twitter:
+  username: twitter_username            # change to your twitter username
+
+social:
+  name: your_full_name                  # it will shows as the copyright owner in Footer
+  email: example@doamin.com             # change to your email address
+  links:
+    - https://github.com/tjrwls444       # change to your github homepage
+
+google_site_verification: google_meta_tag_verification # change to your verification string
+# --------------------------
+
+
+# Only if your site type is GitHub Project sites and doesn't have a custom domain,
+# change below value to '/projectname'.
+baseurl: 'tjrwls444'
+
+# Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
+timezone: Asia/Shanghai
+
+google_analytics:
+  id: ''          # Fill with your Google Analytics ID
+  pv:
+    # The Google Analytics pageviews switch.
+    # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
+    enabled: false
+    # the next options only valid when `google_analytics.pv` is enabled.
+    proxy_url: ''
+    proxy_endpoint: ''
+    cache: false  # pv data local cache, good for the users from GFW area.
+
+disqus:
+  comments: false  # boolean type, the global switch for posts comments.
+  shortname: ''    # Fill with your Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+
+
+# Prefer color scheme setting.
+#
+# Note: Keep empty will follow the system prefer color by default,
+# and there will be a toggle to switch the theme between dark and light
+# on the bottom left of the sidebar.
+#
+# Available options:
+#
+#     light  - Use the light color scheme
+#
+#     dark   - Use the dark color scheme
+#
+theme_mode:   # <light|dark>
+
+# boolean type, the global switch for ToC in posts.
+toc: true
+
+paginate: 10
+
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:   # Rouge Options › https://github.com/jneen/rouge#full-options
+    css_class: highlight
+    # default_lang: console
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+# DO NOT change this unless you're a Pro user on Jekyll and Web development,
+# or you think you're smart enough to change other relevant URLs within this template.
+permalink: /posts/:title/
+
+collections:
+  tabs:
+    output: true
+    sort_by: order
+
+
 defaults:
- -
-  scop:
-   path: "" # 이 빈 문자열은 프로젝트의 모든 파일을 의미함
-   # type: "posts" # 이전 Jekyll 2.2 에서는 `post`
-  values:
-   layout: "default" # 이제 type 이 posts 인 파일에만 레이아웃이 설정될 것입니다.
-   lang: "ko-KR" #모든 페이지 page.lang 을 가지게 됨
-   
-# 페이지 네비 세팅
-# jekyll-paginate-v2 는  GitHub Pages 에서는 이 플러그인을 지원하지 않는다.
-plugins:
-  - jekyll-paginate # 플러그인 사용을 의미한다.(Jekyll 3)
-  - jekyll-sitemap # sitemap 생성 플러그인
-    # pagination settings
-paginate: 6 # 한 페이지당 보여줄 posts 수
-    # :num은 페이지마다 번호를 각각 부여한다.
-paginate_path: "/page/:num" # 다음 페이지에 해당하는 URL
+  -
+    scope:
+      path: ''          # An empty string here means all files in the project
+      type: posts
+    values:
+      layout: post
+      comments: true    # Enable comments in posts.
+      toc: true         # Display TOC column in posts.
+      breadcrumb:
+        -
+          label: Posts
+          url: /
+  -
+    scope:
+      path: _drafts
+    values:
+      comments: false
+  -
+    scope:
+      path: index.html
+    values:
+      breadcrumb:
+        -
+          label: Posts
+  -
+    scope:
+      path: tags
+    values:
+      breadcrumb:
+        -
+          label: Home
+          url: /
+        -
+          label: Tags
+          url: /tabs/tags/
+  -
+    scope:
+      path: categories
+    values:
+      breadcrumb:
+        -
+          label: Home
+          url: /
+        -
+          label: Categories
+          url: /tabs/categories/
+  -
+    scope:
+      path: ''
+      type: tabs             # see `site.collections`
+    values:
+      layout: page
+      dynamic_title: true    # Hide title in mobile screens.
+      breadcrumb:
+        -
+          label: Home
+          url: /
+
+sass:
+  sass_dir: /assets/css
+  style: compressed
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: []
+
+exclude:
+  - vendor
+  - Gemfile.lock
+  - Gemfile
+  - tools
+  - docs
+  - README.md
+  - LICENSE
+
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    tag: /tags/:name/
+    category: /categories/:name/

@@ -1,64 +1,183 @@
-## 개발을 위한 로컬 세팅. 
-#### # *.md 확장자 명은 Markdown 문법으로 작성된 파일이다.
-#### https://github.com/sujaykundu777/devlopr-jekyll <- 해당 테마 포크 , fork의 경우 잔디가 심어지지 않아 신규 레포 생성
+# Chirpy
 
-### 1. 원하는 테마 Fork 후 초기 세팅 정리
-- 레퍼지토리 이름 정리 : 7271kim(개인 계정 이름).github.com
-- _config.yml 설정 변경 : URL 수정  >> url: "7271kim.github.com" 
-- 접속확인 : https://7271kim.github.io/
+Language: English | [简体中文](docs/README.zh-CN.md)
 
-### 기본 구조 
- https://jekyllrb-ko.github.io/docs/structure/
- <pre>
- .
- ├── _config.yml
- ├── _data
-     └── members.yml
- ├── _drafts
-     ├── begin-with-the-crazy-ideas.md
-     └── on-simplicity-in-technology.md
- ├── _includes
-     ├── footer.html
-     └── header.html
- ├── _layouts
-     ├── default.html
-     └── post.html
- ├── _posts
-     ├── 2007-10-29-why-every-programmer-should-play-nethack.md
-     └── 2009-04-26-barcamp-boston-4-roundup.md
- ├── _sass
-     ├── _base.scss
-     └── _layout.scss
- ├── _site
- ├── .jekyll-metadata
- └── index.html # 'index.md' 이어도 되지만 올바른 YAML 머리말이 필요합니다
-</pre>
-### 2. 설치
-- 루비 버전 2.2.5 또는 그 이상.
-- https://rubyinstaller.org/ 다운로드 및 설치
-- gem install jekyll bundler 으로 기본 Jekyll 설치 
-- 해당 템플릿에서 git 명령어를 사용하기 때문에  C:\Program Files\Git\bin git.exe 환경변수 path 세팅
-- 템플릿 루트 폴더에서 cmd > bundle 명령어 실행 
-- jekyll serve로 로컬서버 실행
+[![Build Status](https://github.com/cotes2020/jekyll-theme-chirpy/workflows/build/badge.svg?branch=master&event=push)](https://github.com/cotes2020/jekyll-theme-chirpy/actions?query=branch%3Amaster+event%3Apush)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8220b926db514f13afc3f02b7f884f4b)](https://app.codacy.com/manual/cotes2020/jekyll-theme-chirpy?utm_source=github.com&utm_medium=referral&utm_content=cotes2020/jekyll-theme-chirpy&utm_campaign=Badge_Grade_Dashboard)
+[![GitHub license](https://img.shields.io/github/license/cotes2020/jekyll-theme-chirpy.svg)](https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/LICENSE)
+[![996.icu](https://img.shields.io/badge/link-996.icu-%23FF4D5B.svg)](https://996.icu)
 
-#### #지킬은 기본적으로 YAML Front Matter을 가진 파일이 아니면 Liquid를 프로세싱하지 않는데, 이 YAML Front Matter은 기본적으로 아래 두 줄로 표시된다.
-<pre>
----
----
-</pre>
+A minimal, sidebar, responsive web design Jekyll theme that focuses on text presentation. Designed to help you record and share your knowledge easily. [Live Demo »](https://chirpy.cotes.info)
 
-### 3. 환경변수 세팅 
-- 기본 값은  {{ default: site.lang }} 이런식을 불러오기 위해서 _config.yml에 설정하기
-<pre>  
-defaults:
- -
-  scope:
-   path: ""
-  values:
-   lang: "ko-KR"
-   layout: default
-</pre>
-- scope, values는 기본이다 해당 문법을 번역하면  모든 패스, default 레이아웃을 사용하는 곳의 lang 변수의 값은 ko다 
+[![Devices Mockup](https://raw.githubusercontent.com/cotes2020/jekyll-theme-chirpy/master/assets/img/sample/devices-mockup.png)](https://chirpy.cotes.info)
 
-#### 4. 해당 git 사용시 >> import >>  import as general project
-##### 5. 이클립스 초기 세팅 : https://7271kim.github.io/gitblog/2019/06/17/how-to-ues-jekyll-settings.html >> 개인세팅 참고
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Credits](#credits)
+- [Supporting](#supporting)
+- [License](#license)
+
+## Features
+
+- Pinned Posts
+- Configurable theme mode
+- Double-level Categories
+- Last modified date for posts
+- Table of Contents
+- Automatically recommend related posts
+- Syntax highlighting
+- Mathematical expressions
+- Mermaid diagram & flowchart
+- Search
+- Atom Feeds
+- Disqus Comments
+- Google Analytics
+- GA Pageviews reporting (Advanced)
+- SEO and Performance Optimization
+
+## Installation
+
+[Fork **Chirpy**](https://github.com/cotes2020/jekyll-theme-chirpy/fork) on GitHub, rename the repository to `USERNAME.github.io` (where `USERNAME` is your GitHub username), and then open terminal and clone the fork to local by:
+
+```terminal
+$ git clone https://github.com/USERNAME/USERNAME.github.io.git -b master --single-branch
+```
+
+### Setting up the local envrionment
+
+If you would like to run or build the project on your local machine, please follow the [Jekyll Docs](https://jekyllrb.com/docs/installation/) to complete the installation of `Ruby`, `RubyGems`, `Jekyll` and `Bundler`.
+
+Before running or building for the first time, please complete the installation of the Jekyll plugins. Go to the root directory of project and run:
+
+```terminal
+$ bundle install
+```
+
+`bundle` will automatically install all the dependencies specified by `Gemfile`.
+
+### Setting up Docker environment (optional)
+
+If you're a loyal fan of [**Docker**](https://www.docker.com/) or just too lazy to install the packages mentioned in [_Setting up the local envrionment_](#setting-up-the-local-envrionment), please make sure you have **Docker Engine** installed and running, and then get Docker image `jekyll/jekyll` from Docker Hub by the following command:
+
+```console
+$ docker pull jekyll/jekyll
+```
+
+## Usage
+
+### Initialization
+
+Go to the root directory of the project and start initialization:
+
+```console
+$ bash tools/init.sh
+```
+
+> **Note**: If you not intend to deploy it on GitHub Pages, append parameter option `--no-gh` at the end of the above command.
+
+What it does is:
+
+1. Remove some files or directories from your repository:
+
+    - `.travis.yml`
+    - files under `_posts`
+    - folder `docs`
+
+2. If you use the `--no-gh` option, the directory `.github` will be deleted. Otherwise, setup the GitHub Action workflow by removing extension `.hook` of `.github/workflows/pages-deploy.yml.hook`, and then remove the other files and directories in folder `.github`.
+
+3. Automatically create a commit to save the changes.
+
+### Configuration
+
+Generally, go to `_config.yml` and configure the variables as needed. Some of them are typical options:
+
+- `url`
+- `avatar`
+- `timezone`
+- `theme_mode`
+
+### Run Locally
+
+You may want to preview the site contents before publishing, so just run it by:
+
+```terminal
+$ bundle exec jekyll s
+```
+
+Then open a browser and visit to <http://localhost:4000>.
+
+### Run on Docker
+
+Run the site on Docker with the following command:
+
+```terminal
+$ docker run -it --rm \
+    --volume="$PWD:/srv/jekyll" \
+    -p 4000:4000 jekyll/jekyll \
+    jekyll serve
+```
+
+### Deployment
+
+Before the deployment begins, checkout the file `_config.yml` and make sure the `url` is configured correctly. Furthermore, if you prefer the [_project site_](https://help.github.com/en/github/working-with-github-pages/about-github-pages#types-of-github-pages-sites) and don't use a custom domain, or you want to visit your website with a base url on a web server other than **GitHub Pages**, remember to change the `baseurl` to your project name that starting with a slash. For example, `/project`.
+
+Assuming you have already gone through the [initialization](#initialization), you can now choose ONE of the following methods to deploy your website.
+
+#### Deploy on GitHub Pages
+
+For security reasons, GitHub Pages build runs on `safe` mode, which restricts us from using plugins to generate additional page files. Therefore, we can use **GitHub Actions** to build the site, store the built site files on a new branch, and use that branch as the source of the Pages service.
+
+1. Push any commit to `origin/master` to trigger the GitHub Actions workflow. Once the build is complete and successful, a new remote branch named `gh-pages` will appear to store the built site files.
+
+2. Browse to your repo's landing page on GitHub and select the branch `gh-pages` as the [publishing source](https://docs.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) throught _Settings_ → _Options_ → _GitHub Pages_:
+    ![gh-pages-sources](https://raw.githubusercontent.com/cotes2020/jekyll-theme-chirpy/master/assets/img/sample/gh-pages-sources.png)
+
+3. Visit your website at the address indicated by GitHub.
+
+#### Deploy on Other Platforms
+
+On platforms other than GitHub, we cannot enjoy the convenience of **GitHub Actions**. Therefore, we should build the site locally (or on some other 3rd-party CI platform) and then put the site files on the server.
+
+Go to the root of the source project, build your site by:
+
+```console
+$ JEKYLL_ENV=production bundle exec jekyll b
+```
+
+Or, build the site with Docker by:
+
+```terminal
+$ docker run -it --rm \
+    --env JEKYLL_ENV=production \
+    --volume="$PWD:/srv/jekyll" \
+    jekyll/jekyll \
+    jekyll build
+```
+
+Unless you specified the output path, the generated site files will be placed in folder `_site` of the project's root directory. Now you should upload those files to your web server.
+
+### Documentation
+
+For more details and the better reading experience, please check out the [tutorials on demo site](https://chirpy.cotes.info/categories/tutorial/). In the meanwhile, a copy of the tutorial is also available on the [Wiki](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+
+## Contributing
+
+The old saying, "Two heads are better than one." Consequently, welcome to report bugs, improve code quality or submit a new feature. For more information, see [contributing guidelines](.github/CONTRIBUTING.md).
+
+## Credits
+
+This theme is mainly built with [Jekyll](https://jekyllrb.com/) ecosystem, [Bootstrap](https://getbootstrap.com/), [Font Awesome](https://fontawesome.com/) and some other wonderful tools (their copyright information can be found in the relevant files).
+
+:tada: Thanks to all the volunteers who contributed to this project, their GitHub IDs are on [this list](https://github.com/cotes2020/jekyll-theme-chirpy/graphs/contributors). Also, I won't forget those guys who submitted the issues or unmerged PR because they reported bugs, shared ideas or inspired me to write more readable documentation.
+
+## Supporting
+
+If you enjoy this theme or find it helpful, please consider becoming my sponsor, I'd really appreciate it! Click the button <kbd>:heart: Sponsor</kbd> at the top of the [Home Page](https://github.com/cotes2020/jekyll-theme-chirpy) and choose a link that suits you to donate; this will encourage and help me better maintain the project.
+
+## License
+
+This work is published under [MIT](https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/LICENSE) License.
