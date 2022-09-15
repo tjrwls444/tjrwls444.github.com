@@ -184,7 +184,7 @@
             const totalLength = 26;
             for (const spell of input) {
                 const code = spell.charCodeAt();
-                if (Number(code) === 10 || Number(code) === 32) {
+                if (code === 10 || code === 32) {
                     continue;
                 }
                 resultData[code] = (resultData[code] ?? 0) + 1;
@@ -194,7 +194,7 @@
                 const code = getEncrypt(spell.charCodeAt() - 65, k1, k2, totalLength);
                 return String.fromCharCode(code + 65);
             }));
-            $("#decrypt").html(input.map(spell => {
+            $("#decrypt").html(input.filter(spell => spell.charCodeAt() !== 32 && spell.charCodeAt() !== 10).map(spell => {
                 const code = getDecrypt(spell.charCodeAt() - 65, k1, k2, totalLength);
                 return String.fromCharCode(code + 65);
             }));
@@ -224,7 +224,7 @@
             let result = ``;
             for (const k1 of keys) {
                 for (let k2 = 1; k2 <= totalLength; k2++) {
-                    result += `<div>K1 = ${k1}, K2 = ${k2} 복호문 : ${input.map(spell => {
+                    result += `<div>K1 = ${k1}, K2 = ${k2} 복호문 : ${input.filter(spell => spell.charCodeAt() !== 32 && spell.charCodeAt() !== 10).map(spell => {
                         const code = getDecrypt(spell.charCodeAt() - 65, k1, k2, totalLength);
                         return String.fromCharCode(code + 65);
                     }).join('')}</div>`;
