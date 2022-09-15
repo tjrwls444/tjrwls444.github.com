@@ -8,7 +8,7 @@ url: "https://tjrwls444.github.io/"
 # 상단 네비 우측영역에 노출될 페이지 설정
 header_pages: 
  - "index.md"
- - "an.html"
+ - "affine_love.html"
  - "categories/all.md"
  - "tags/all.md"
  
