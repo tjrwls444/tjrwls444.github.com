@@ -184,8 +184,8 @@
             const totalLength = 26;
             for (const spell of input) {
                 const code = spell.charCodeAt();
-                if (code === '10' || code === '32') {
-                    return;
+                if (Number(code) === 10 || Number(code) === 32) {
+                    continue;
                 }
                 resultData[code] = (resultData[code] ?? 0) + 1;
             }
