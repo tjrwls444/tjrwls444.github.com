@@ -1,96 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <style>
-    /* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-    display: block;
-}
-body {
-    line-height: 1;
-}
-ol, ul {
-    list-style: none;
-}
-blockquote, q {
-    quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-    content: '';
-    content: none;
-}
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-p {
-    padding-left: 10px;
-    padding-top: 10px;
-    
-}
-  </style>
-</head>
-<body>
- <textarea id="key" rows="20" cols="100">
-    
- </textarea>
- <span id="result"></span>
-<script>
-$('#key').keyup(function(event){
-    const data = {};
-    const value  = $('#key').val().split('');
-    for( const one of value){
-        if(!data[one.charCodeAt()]) {
-            data[one.charCodeAt()] = 1;
-        } else {
-            data[one.charCodeAt()]++;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <style>
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        embed,
+        figure,
+        figcaption,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        output,
+        ruby,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
         }
-    }
-    let result = "";
-    console.log(data);
-    for( const code in data ){
-        if(code != 9 && code != 10 && code != 32) {
-            result += `<p>${String.fromCharCode( code )} : ${data[code]}개</p>`
-        };
-    }
-    
-    $("#result").html(result);
-    
-});
-</script>
+
+        /* HTML5 display-role reset for older browsers */
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        blockquote,
+        q {
+            quotes: none;
+        }
+
+        blockquote:before,
+        blockquote:after,
+        q:before,
+        q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        p {
+            padding-left: 10px;
+            padding-top: 10px;
+
+        }
+
+        span {
+            padding: 20px;
+        }
+
+        div {
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div> Affine Cipher ( A~Z )</div>
+    <div><textarea id="key" rows="20" cols="50"></textarea></div>
+    <div> K1 : <input type="text" value="3" id="k1" /> ( 중복된 값을 가지면 안되기 때문에 26과 소인수여야 한다 )</div>
+    <div> K2 : <input type="text" value="2" id="k2" /></div>
+    <div id="result"></div>
+    <div style="margin-top: 30px;">------------------ </div>
+    <div>암호문 C = (P x K1 + K2) mod 26</div>
+    <div id="ciphert"></div>
+    <div style="margin-top: 30px;">------------------ </div>
+
+    <div style="margin-top: 30px;">------------------ </div>
+    <div>복호문</div>
+    <div id="decrypt"></div>
+    <div style="margin-top: 30px;">------------------ </div>
+
+    <div style="margin-top: 30px;">------------------ </div>
+    <div>전체 검색</div>
+    <div id="finder"></div>
+    <div style="margin-top: 30px;">------------------ </div>
+    <script>
+        $('#key, #k1, #k2').on('change keyup keydown paste cut', (event) => {
+            const resultData = {};
+            const input = $('#key').val()?.split('') ?? [];
+            const k1 = Number($('#k1').val());
+            const k2 = Number($('#k2').val());
+            const totalLength = 26;
+            for (const spell of input) {
+                const code = spell.charCodeAt();
+                if (code === '10' || code === '32') {
+                    return;
+                }
+                resultData[code] = (resultData[code] ?? 0) + 1;
+            }
+            $("#result").html(Object.keys(resultData).map(code => `<div><span>${String.fromCharCode(code)}</span><span>${resultData[code]}개</span></div>`));
+            $("#ciphert").html(input.map(spell => {
+                const code = getEncrypt(spell.charCodeAt() - 65, k1, k2, totalLength);
+                return String.fromCharCode(code + 65);
+            }));
+            $("#decrypt").html(input.map(spell => {
+                const code = getDecrypt(spell.charCodeAt() - 65, k1, k2, totalLength);
+                return String.fromCharCode(code + 65);
+            }));
+
+            if (!k1 || !k2) {
+                $('#decrypt').hide();
+                $("#finder").html(getFindAll(input, totalLength));
+            } else {
+                $('#decrypt').show();
+            }
+        });
+
+        function getEncrypt(code, k1, k2, totalLength) {
+            return (code * k1 + k2) % totalLength;
+        }
+
+        function getDecrypt(code, k1, k2, totalLength) {
+            let start = 0;
+            while (start < totalLength && (start * k1 + k2) % totalLength !== code) {
+                start++;
+            }
+            return start;
+        }
+
+        function getFindAll(input, totalLength) {
+            let keys = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21];
+            let result = ``;
+            for (const k1 of keys) {
+                for (let k2 = 1; k2 <= totalLength; k2++) {
+                    result += `<div>K1 = ${k1}, K2 = ${k2} 복호문 : ${input.map(spell => {
+                        const code = getDecrypt(spell.charCodeAt() - 65, k1, k2, totalLength);
+                        return String.fromCharCode(code + 65);
+                    }).join('')}</div>`;
+                }
+            }
+            return result;
+        }
+    </script>
 </body>
 
 
